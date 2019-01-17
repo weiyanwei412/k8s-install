@@ -1,0 +1,51 @@
+k8s-master:
+    host: 172.18.1.10
+    user: root
+    port: 22
+    priv: /root/.ssh/id_rsa
+    minion_opts:
+      grains:
+         k8s-role: master
+k8s-node1:
+    host: 172.18.1.11
+    user: root
+    port: 22
+    priv: /root/.ssh/id_rsa
+    minion_opts:
+      grains:
+         k8s-role: node
+k8s-node2:
+    host: 172.18.1.12
+    user: root
+    port: 22
+    priv: /root/.ssh/id_rsa
+    minion_opts:
+      grains:
+         k8s-role: node
+etcd1:
+    host: 172.18.1.7
+    user: root
+    port: 22
+    priv: /root/.ssh/id_rsa
+    minion_opts:
+      grains:
+         etcd-role: node
+         etcd-name: etcd-node1
+etcd2:
+    host: 172.18.1.8
+    user: root
+    port: 22
+    priv: /root/.ssh/id_rsa
+    minion_opts:
+      grains:
+         etcd-role: node
+         etcd-name: etcd-node2
+etcd3:
+    host: 172.18.1.9
+    user: root
+    port: 22
+    priv: /root/.ssh/id_rsa
+    minion_opts:
+      grains:
+         etcd-role: node
+         etcd-name: etcd-node3
