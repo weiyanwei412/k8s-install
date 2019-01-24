@@ -11,8 +11,8 @@
 [root@linux-node1 src]# mv cfssljson_linux-amd64  /opt/kubernetes/bin/cfssljson
 [root@linux-node1 src]# mv cfssl_linux-amd64  /opt/kubernetes/bin/cfssl
 复制cfssl命令文件到k8s-node1和k8s-node2节点。如果实际中多个节点，就都需要同步复制。
-[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.12: /opt/kubernetes/bin
-[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 192.168.56.13: /opt/kubernetes/bin
+[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 172.18.1.11: /opt/kubernetes/bin
+[root@linux-node1 ~]# scp /opt/kubernetes/bin/cfssl* 172.18.1.12: /opt/kubernetes/bin
 ```
 
 ## 2.初始化cfssl
@@ -28,7 +28,7 @@
 {
   "signing": {
     "default": {
-      "expiry": "8760h"
+      "expiry": "87600h"
     },
     "profiles": {
       "kubernetes": {
@@ -38,7 +38,7 @@
             "server auth",
             "client auth"
         ],
-        "expiry": "8760h"
+        "expiry": "87600h"
       }
     }
   }
@@ -82,6 +82,6 @@
 ```
 # cp ca.csr ca.pem ca-key.pem ca-config.json /opt/kubernetes/ssl
 SCP证书到k8s-node1和k8s-node2节点
-# scp ca.csr ca.pem ca-key.pem ca-config.json 192.168.56.12:/opt/kubernetes/ssl 
-# scp ca.csr ca.pem ca-key.pem ca-config.json 192.168.56.13:/opt/kubernetes/ssl
+# scp ca.csr ca.pem ca-key.pem ca-config.json 172.18.1.11:/opt/kubernetes/ssl 
+# scp ca.csr ca.pem ca-key.pem ca-config.json 172.18.1.12:/opt/kubernetes/ssl
 ```
