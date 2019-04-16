@@ -24,6 +24,8 @@ ExecStart=/opt/kubernetes/bin/kubelet \
   --anonymous-auth=false \
   --fail-swap-on=false \
   --logtostderr=true \
+  --kube-reserved=cpu=0.5,memory=1Gi \
+  --system-reserved=cpu=0.5,memory=1Gi \
   --v=2 \
   --log-dir=/opt/kubernetes/log
 Restart=on-failure
