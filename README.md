@@ -241,6 +241,13 @@ CLUSTER_DNS_DOMAIN: "cluster.local."
 ```
 执行高级状态，会根据定义的角色再对应的机器部署对应的服务
 
+node节点解析
+````
+salt-ssh '*'  grains.item fqdn_ip4
+
+````
+
+
 5.2 部署Etcd，由于Etcd是基础组建，需要先部署，目标为部署etcd的节点。
 ```
 [root@k8s-master ~]# salt-ssh -L 'etcd1,etcd2,etcd3' state.sls k8s.etcd
