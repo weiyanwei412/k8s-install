@@ -6,7 +6,7 @@
 # Description:  Kubernetes Config with Pillar
 #********************************************
 
-#设置Master SLB IP  或者VIP
+#设置Master SLB IP  或者VIP 如果是单机master 设置成master的IP地址
 MASTER_VIP: "172.18.1.88"
 
 #设置Master的IP地址(必须修改)
