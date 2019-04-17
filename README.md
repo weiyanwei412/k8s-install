@@ -45,7 +45,7 @@
   ![架构图](https://github.com/unixhot/salt-kubernetes/blob/master/docs/K8S.png)
   
 ## 0.系统初始化(必备)
-1. 设置主机名！！！
+1. 设置主机名！！！ 
 ```
 [root@k8s-master ~]# cat /etc/hostname 
 k8s-master
@@ -67,7 +67,7 @@ etcd3
 
 
 ```
-2. 设置/etc/hosts保证主机名能够解析
+2. 设置/etc/hosts保证主机名能够解析    一定要每个节点都设置hosts ***
 ```
 cat >>/etc/hosts<<-EOF
 172.18.1.7 etcd1
