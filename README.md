@@ -232,6 +232,13 @@ etcd3:
 ## 4.修改对应的配置参数，本项目使用Salt Pillar保存配置
 ```
 [root@k8s-master ~]# vim /srv/pillar/k8s.sls
+#设置Master的VIP地址(必须修改)
+MASTER_VIP: "172.18.1.88"
+#或者
+#MASTER_SLBIP: "172.18.1.88"
+
+
+
 #设置Master的IP地址(必须修改)
 MASTER_IP: "172.18.1.10"
 
