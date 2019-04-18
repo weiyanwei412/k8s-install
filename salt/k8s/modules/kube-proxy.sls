@@ -31,7 +31,7 @@ kube-proxy-pem:
 
 kubeproxy-set-cluster:
   cmd.run:
-    - name: cd /opt/kubernetes/cfg && /opt/kubernetes/bin/kubectl config set-cluster kubernetes --certificate-authority=/opt/kubernetes/ssl/ca.pem --embed-certs=true --server=https://{{ pillar['MASTER_IP'] }}:6443  --kubeconfig=kube-proxy.kubeconfig
+    - name: cd /opt/kubernetes/cfg && /opt/kubernetes/bin/kubectl config set-cluster kubernetes --certificate-authority=/opt/kubernetes/ssl/ca.pem --embed-certs=true --server=https://{{ pillar['MASTER_VIP'] }}:6443  --kubeconfig=kube-proxy.kubeconfig
 
 kubeproxy-set-credentials:
   cmd.run:
