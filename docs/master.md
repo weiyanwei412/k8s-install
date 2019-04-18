@@ -9,12 +9,15 @@
 
 ### 1.创建生成CSR的 JSON 配置文件
 ```
+#集群master节点ip 与VIP 或者SLB负载均衡IP配置在JSON文件中，譬如master02  为192.168.56.10  VIP或者SLBIP为192.168.56.88
 [root@linux-node1 src]# vim kubernetes-csr.json
 {
   "CN": "kubernetes",
   "hosts": [
     "127.0.0.1",
     "192.168.56.11",
+    "192.168.56.88",
+    "192.168.56.10",
     "10.1.0.1",
     "kubernetes",
     "kubernetes.default",
