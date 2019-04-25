@@ -28,6 +28,9 @@
         <td><a href="docs/node.md">5.Node节点部署</a></td>
         <td><a href="docs/flannel.md">6.Flannel部署</a></td>
         <td><a href="docs/app.md">7.应用创建</a></td>
+        <td><a href="docs/harbor.md">8.Harbor镜像仓库搭建</a></td>
+        <td><a href="docs/registry.md">8.请链接registry镜像仓库搭建</a></td>
+        
     </tr>
     <tr>
         <td><strong>必备插件</strong></td>
