@@ -376,7 +376,7 @@ k8s-master02:
   minion_opts:
     grains:
       k8s-role: master
-[root@k8s-master ~]# salt-ssh 'k8s-node3' state.highstate
+[root@k8s-master ~]# salt-ssh -L 'k8s-master02' state.highstate
 ```
 
 ## 10.下一步要做什么？
