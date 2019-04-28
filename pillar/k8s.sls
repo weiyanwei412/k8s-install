@@ -6,8 +6,8 @@
 # Description:  Kubernetes Config with Pillar
 #********************************************
 #MasterIP定义
-K8S_MASTER01_IP="172.18.1.10"
-K8S_MASTER02_IP="172.18.1.9"
+K8S_MASTER01_IP: "172.18.1.10"
+K8S_MASTER02_IP: "172.18.1.9"
 MASTER_VIP: "172.18.1.88"
 
 #设置Master的IP地址(必须修改)
