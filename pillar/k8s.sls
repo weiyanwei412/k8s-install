@@ -44,4 +44,4 @@ POD_CIDR: "10.2.0.0/16"
 CLUSTER_DNS_DOMAIN: "cluster.local."
 
 #设置Docker Registry地址
-DOCKER_REGISTRY: "http://172.18.1.10:5000"
+DOCKER_REGISTRY: "http://harbor.flagnew.com"
