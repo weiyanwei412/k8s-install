@@ -362,8 +362,24 @@ k8s-node3:
       k8s-role: node
 [root@k8s-master ~]# salt-ssh 'k8s-node3' state.highstate
 ```
+## 9.如何新增Kubernetes Master节点
 
-## 9.下一步要做什么？
+- 1.设置SSH无密码登录
+- 2.在/etc/salt/roster里面，增加对应的机器
+- 3.执行SaltStack状态salt-ssh 'k8s-master02' state.highstate。
+```
+[root@k8s-master ~]# vim /etc/salt/roster 
+k8s-master02:
+  host: 172.18.1.9
+  user: root
+  priv: /root/.ssh/id_rsa
+  minion_opts:
+    grains:
+      k8s-role: master
+[root@k8s-master ~]# salt-ssh 'k8s-node3' state.highstate
+```
+
+## 10.下一步要做什么？
 
 你可以安装Kubernetes必备的插件
 <table border="0">
