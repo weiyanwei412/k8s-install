@@ -276,6 +276,8 @@ POD_CIDR: "10.2.0.0/16"
 CLUSTER_DNS_DOMAIN: "cluster.local."
 
 ```
+变量查看
+salt-ssh '*' pillar.items  
 
 ## 5.执行SaltStack状态
 
