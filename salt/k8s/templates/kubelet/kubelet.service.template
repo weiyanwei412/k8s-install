@@ -23,7 +23,7 @@ ExecStart=/opt/kubernetes/bin/kubelet \
   --allow-privileged=true \
   --anonymous-auth=true \
   --fail-swap-on=false \
-  --logtostderr=true \
+  --logtostderr=false \
   --kube-reserved=cpu=0.5,memory=1Gi \
   --system-reserved=cpu=0.5,memory=1Gi \
   --v=2 \
