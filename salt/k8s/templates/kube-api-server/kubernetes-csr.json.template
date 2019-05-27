@@ -5,6 +5,7 @@
     "{{ NODE_IP }}",
     "{{ CLUSTER_KUBERNETES_SVC_IP }}",
     "{{ pillar['MASTER_VIP'] }}",
+    "{{ pillar['MASTER_IP'] }}",
     "{{ pillar['K8S_MASTER01_IP'] }}",
     "{{ pillar['K8S_MASTER02_IP'] }}",
     "{{ pillar['K8S_MASTER03_IP'] }}",
