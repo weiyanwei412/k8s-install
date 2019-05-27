@@ -1,4 +1,4 @@
-k8s-master:
+k8s-master01:
     host: 172.18.1.10
     user: root
     port: 22
