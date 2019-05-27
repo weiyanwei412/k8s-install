@@ -110,7 +110,7 @@ cat >>/etc/hosts<<-EOF
 172.18.1.7 etcd1
 172.18.1.8 etcd2
 172.18.1.9 etcd3
-172.18.1.10 k8s-master
+172.18.1.10 k8s-master01
 172.18.1.11 k8s-node1
 172.18.1.12 k8s-node2
 EOF
@@ -123,33 +123,33 @@ EOF
 
 ## 1.设置部署节点到其它所有节点的SSH免密码登录（包括本机）
 ```
-[root@k8s-master ~]# ssh-keygen -t rsa
-[root@k8s-master ~]# ssh-copy-id k8s-master
-[root@k8s-master ~]# ssh-copy-id k8s-node1
-[root@k8s-master ~]# ssh-copy-id k8s-node2
-[root@k8s-master ~]# ssh-copy-id etcd1
-[root@k8s-master ~]# ssh-copy-id etcd2
-[root@k8s-master ~]# ssh-copy-id etcd3
+[root@k8s-master01 ~]# ssh-keygen -t rsa
+[root@k8s-master01 ~]# ssh-copy-id k8s-master01
+[root@k8s-master01 ~]# ssh-copy-id k8s-node1
+[root@k8s-master01 ~]# ssh-copy-id k8s-node2
+[root@k8s-master01 ~]# ssh-copy-id etcd1
+[root@k8s-master01 ~]# ssh-copy-id etcd2
+[root@k8s-master01 ~]# ssh-copy-id etcd3
 ```
 
 ## 2.安装Salt-SSH并克隆本项目代码。
 
 2.1 安装Salt SSH（注意：老版本的Salt SSH不支持Roster定义Grains，需要2017.7.4以上版本）
 ```
-[root@k8s-master ~]# curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
-[root@k8s-master ~]# curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
-[root@k8s-master ~]# yum install https://mirrors.aliyun.com/saltstack/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
-[root@k8s-master ~]# sed -i "s/repo.saltstack.com/mirrors.aliyun.com\/saltstack/g" /etc/yum.repos.d/salt-latest.repo
-[root@k8s-master ~]# yum install -y salt-ssh git unzip
+[root@k8s-master01 ~]# curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+[root@k8s-master01 ~]# curl -o /etc/yum.repos.d/epel.repo http://mirrors.aliyun.com/repo/epel-7.repo
+[root@k8s-master01 ~]# yum install https://mirrors.aliyun.com/saltstack/yum/redhat/salt-repo-latest-2.el7.noarch.rpm
+[root@k8s-master01 ~]# sed -i "s/repo.saltstack.com/mirrors.aliyun.com\/saltstack/g" /etc/yum.repos.d/salt-latest.repo
+[root@k8s-master01 ~]# yum install -y salt-ssh git unzip
 ```
 
 2.2 获取本项目代码，并放置在/srv目录
 ```
-[root@k8s-master ~]# git clone https://github.com/weiyanwei412/k8s-install.git
-[root@k8s-master ~]# cd salt-kubernetes/
-[root@k8s-master ~]# mv * /srv/
-[root@k8s-master srv]# /bin/cp /srv/roster /etc/salt/roster
-[root@k8s-master srv]# /bin/cp /srv/master /etc/salt/master
+[root@k8s-master01 ~]# git clone https://github.com/weiyanwei412/k8s-install.git
+[root@k8s-master01 ~]# cd salt-kubernetes/
+[root@k8s-master01 ~]# mv * /srv/
+[root@k8s-master01 srv]# /bin/cp /srv/roster /etc/salt/roster
+[root@k8s-master01 srv]# /bin/cp /srv/master /etc/salt/master
 ```
 
 2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载,下载k8s-v1.12.3-auto.zip。
@@ -157,10 +157,10 @@ EOF
 Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
 
 ```
-[root@k8s-master ~]# cd /srv/salt/k8s/
-[root@k8s-master k8s]# unzip k8s-v1.12.3-auto.zip 
-[root@k8s-master k8s]# rm -f k8s-v1.12.3-auto.zip 
-[root@k8s-master k8s]# ls -l files/
+[root@k8s-master01 ~]# cd /srv/salt/k8s/
+[root@k8s-master01 k8s]# unzip k8s-v1.12.3-auto.zip 
+[root@k8s-master01 k8s]# rm -f k8s-v1.12.3-auto.zip 
+[root@k8s-master01 k8s]# ls -l files/
 total 0
 drwxr-xr-x. 2 root root  94 Jun  3 19:12 cfssl-1.2
 drwxr-xr-x. 2 root root 195 Jun  3 19:12 cni-plugins-amd64-v0.7.0
@@ -177,8 +177,8 @@ drwxr-xr-x. 3 root root  17 Jun  3 19:12 k8s-v1.12.3
 - etcd-name: 如果对一台机器设置了etcd-role就必须设置etcd-name
 
 ```
-[root@k8s-master ~]# vim /etc/salt/roster 
-k8s-master:
+[root@k8s-master01 ~]# vim /etc/salt/roster 
+k8s-master01:
     host: 172.18.1.10
     user: root
     port: 22
@@ -234,13 +234,9 @@ etcd3:
 
 ## 4.修改对应的配置参数，本项目使用Salt Pillar保存配置
 ```
-[root@k8s-master ~]# vim /srv/pillar/k8s.sls
+[root@k8s-master01 ~]# vim /srv/pillar/k8s.sls
 #设置Master的VIP地址(必须修改)
 MASTER_VIP: "172.18.1.88"
-#或者
-#MASTER_SLBIP: "172.18.1.88"
-
-
 
 #设置Master的IP地址(必须修改)
 MASTER_IP: "172.18.1.10"
@@ -283,7 +279,7 @@ salt-ssh '*' pillar.items
 
 5.1 测试Salt SSH联通性
 ```
-[root@k8s-master ~]# salt-ssh '*' test.ping
+[root@k8s-master01 ~]# salt-ssh '*' test.ping
 ```
 执行高级状态，会根据定义的角色再对应的机器部署对应的服务
 
@@ -296,37 +292,37 @@ salt-ssh '*'  grains.item fqdn_ip4
 
 5.2 部署Etcd，由于Etcd是基础组建，需要先部署，目标为部署etcd的节点。
 ```
-[root@k8s-master ~]# salt-ssh -L 'etcd1,etcd2,etcd3' state.sls k8s.etcd
+[root@k8s-master01 ~]# salt-ssh -L 'etcd1,etcd2,etcd3' state.sls k8s.etcd
 ```
 注：如果执行失败，新手建议推到重来，请检查各个节点的主机名解析是否正确（监听的IP地址依赖主机名解析）。
 
 5.3 部署K8S集群
 ```
-[root@k8s-master ~]# salt-ssh '*' state.highstate
+[root@k8s-master01 ~]# salt-ssh '*' state.highstate
 ```
 由于包比较大，这里执行时间较长，5分钟+，喝杯咖啡休息一下，如果执行有失败可以再次执行即可！
 
 ## 6.测试Kubernetes安装
 ```
-[root@k8s-master ~]# source /etc/profile
-[root@k8s-master ~]# kubectl get cs
+[root@k8s-master01 ~]# source /etc/profile
+[root@k8s-master01 ~]# kubectl get cs
 NAME                 STATUS    MESSAGE             ERROR
 scheduler            Healthy   ok                  
 controller-manager   Healthy   ok                  
 etcd-0               Healthy   {"health":"true"}   
 etcd-2               Healthy   {"health":"true"}   
 etcd-1               Healthy   {"health":"true"}   
-[root@k8s-master ~]# kubectl get node
+[root@k8s-master01 ~]# kubectl get node
 NAME            STATUS    ROLES     AGE       VERSION
 172.18.1.11   Ready     <none>    1m        v1.12.3
 172.18.1.12   Ready     <none>    1m        v1.12.3
 ```
 ## 7.测试Kubernetes集群和Flannel网络
 ```
-[root@k8s-master ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
+[root@k8s-master01 ~]# kubectl run net-test --image=alpine --replicas=2 sleep 360000
 deployment "net-test" created
 需要等待拉取镜像，可能稍有的慢，请等待。
-[root@k8s-master ~]# kubectl get pod -o wide
+[root@k8s-master01 ~]# kubectl get pod -o wide
 NAME                        READY   STATUS    RESTARTS   AGE   IP          NODE          NOMINATED NODE
 net-test-5786f8b986-tjxhb   1/1     Running   0          17h   10.2.83.2   172.18.1.12   <none>
 net-test-5786f8b986-wmsm4   1/1     Running   0          17h   10.2.83.3   172.18.1.12   <none>
@@ -354,7 +350,7 @@ rtt min/avg/max/mdev = 22.960/22.960/22.960/0.000 ms
 - 2.在/etc/salt/roster里面，增加对应的机器
 - 3.执行SaltStack状态salt-ssh '*' state.highstate。
 ```
-[root@k8s-master ~]# vim /etc/salt/roster 
+[root@k8s-master01 ~]# vim /etc/salt/roster 
 k8s-node3:
   host: 172.18.1.13
   user: root
@@ -370,7 +366,7 @@ k8s-node3:
 - 2.在/etc/salt/roster里面，增加对应的机器
 - 3.执行SaltStack状态salt-ssh 'k8s-master02' state.highstate。
 ```
-[root@k8s-master ~]# vim /etc/salt/roster 
+[root@k8s-master01 ~]# vim /etc/salt/roster 
 k8s-master02:
   host: 172.18.1.9
   user: root
@@ -378,7 +374,7 @@ k8s-master02:
   minion_opts:
     grains:
       k8s-role: master
-[root@k8s-master ~]# salt-ssh -L 'k8s-master02' state.highstate
+[root@k8s-master01 ~]# salt-ssh -L 'k8s-master02' state.highstate
 ```
 
 ## 10.下一步要做什么？
