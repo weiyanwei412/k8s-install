@@ -271,6 +271,45 @@ POD_CIDR: "10.2.0.0/16"
 #设置集群的DNS域名
 CLUSTER_DNS_DOMAIN: "cluster.local."
 
+
+修改证书授权文件
+栗子
+cat /srv/salt/k8s/templates/kube-api-server/kubernetes-csr.json.template
+
+{
+  "CN": "kubernetes",
+  "hosts": [
+    "127.0.0.1",
+    "{{ NODE_IP }}",
+    "{{ CLUSTER_KUBERNETES_SVC_IP }}",
+    "172.18.1.9", #master02
+    "172.18.1.10", #master01
+    "172.18.1.8", #master03
+    "172.18.1.88", #masterVIP 
+    "172.18.1.11",
+    "172.18.1.12",
+    "kubernetes",
+    "kubernetes.default",
+    "kubernetes.default.svc",
+    "kubernetes.default.svc.cluster",
+    "kubernetes.default.svc.cluster.local"
+  ],
+  "key": {
+    "algo": "rsa",
+    "size": 2048
+  },
+  "names": [
+    {
+      "C": "CN",
+      "ST": "Shanghai",
+      "L": "Shanghai",
+      "O": "k8s",
+      "OU": "System"
+    }
+  ]
+}
+
+
 ```
 变量查看
 salt-ssh '*' pillar.items  
