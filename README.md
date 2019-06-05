@@ -152,14 +152,14 @@ EOF
 [root@k8s-master01 srv]# /bin/cp /srv/master /etc/salt/master
 ```
 
-2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载,下载k8s-v1.12.3-auto.zip。
+2.4 下载二进制文件，也可以自行官方下载，为了方便国内用户访问，请在百度云盘下载,下载files.zip
 下载完成后，将文件移动到/srv/salt/k8s/目录下，并解压
-Kubernetes二进制文件下载地址： https://pan.baidu.com/s/1zs8sCouDeCQJ9lghH1BPiw
+Kubernetes二进制文件下载地址： 链接：https://pan.baidu.com/s/1Vfs9K-9LkIkDI_iG3osHMg   提取码：tbvt 
 
 ```
 [root@k8s-master01 ~]# cd /srv/salt/k8s/
-[root@k8s-master01 k8s]# unzip k8s-v1.12.3-auto.zip 
-[root@k8s-master01 k8s]# rm -f k8s-v1.12.3-auto.zip 
+[root@k8s-master01 k8s]# unzip files.zip
+[root@k8s-master01 k8s]# rm -f files.zip
 [root@k8s-master01 k8s]# ls -l files/
 total 0
 drwxr-xr-x. 2 root root  94 Jun  3 19:12 cfssl-1.2
