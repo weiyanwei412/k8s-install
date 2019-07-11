@@ -397,7 +397,7 @@ k8s-node3:
   minion_opts:
     grains:
       k8s-role: node
-[root@k8s-master ~]# salt-ssh 'k8s-node3' state.highstate
+[root@k8s-master ~]# salt-ssh -L 'k8s-node3' state.highstate
 ```
 ## 9.如何新增Kubernetes Master节点
 
